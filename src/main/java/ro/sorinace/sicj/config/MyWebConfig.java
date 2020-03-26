@@ -15,7 +15,10 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @Configuration
 @ComponentScan
 public class MyWebConfig implements WebMvcConfigurer{
-
+    /**
+     * Configure the View Render
+     * @param registry
+     */
     @Override
     public void configureViewResolvers (ViewResolverRegistry registry) {
         registry.freeMarker();
@@ -30,7 +33,10 @@ public class MyWebConfig implements WebMvcConfigurer{
         return configurer;
     }
 
-    //for view extension *.flt
+    /**
+     * for view extension *.flt
+     * @return model (extensia) for the rendered file
+     */
     @Bean
     public ViewResolver freeMarkerViewResolver () {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();

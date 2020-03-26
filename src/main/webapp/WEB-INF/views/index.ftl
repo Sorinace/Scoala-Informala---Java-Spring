@@ -1,44 +1,34 @@
-<import resource="./parts/header.ftl"/>
-<h2>FreeMarker View</h3>
-	<div> Message: ${msg}</div>
-	<div> Time: ${time} </div>
+<#include "./parts/header.ftl">
+
+<!-- <h2>FreeMarker View</h3>
+	<div> Message:
+	<#list speakers as speaker>
+         <#list speaker?keys as key>
+                <#if key == "name">
+                  ${speaker[key]} <br/>
+                </#if>
+         </#list>
+    </#list>
+    </div>	-->
 
   <article class="speakerslist jumbotron d-none d-sm-block">
     <div class="container">
       <div class="row">
+      <#list speakers as speaker>
+
         <div class="col-md text-center">
-          <h4 class="speakerslist-title">Art in Full Bloom</h4>
+          <h4 class="speakerslist-title">${speaker["title"]}</h4>
           <div class="speakerslist-name">with
-            <a href="#">Lorenzo Garcia</a>
+            <a href="${speaker["shortname"]}">${speaker["name"]}</a>
           </div>
-          <div class="speakerslist-info mt-2"> <a href="#">
-              <img class="speakerslist-img rounded-circle" src="./images/speakers/Lorenzo_Garcia_tn.jpg"
-                alt="Photo of Lorenzo Garcia">
-            </a>
-          </div>
-        </div>
-        <div class="col-md text-center">
-          <h4 class="speakerslist-title">Deep Sea Wonders</h4>
-          <div class="speakerslist-name">with
-            <a href="./Hillary_Goldwynn.html">Hilary Goldywynn Post</a>
-          </div>
-          <p class="speakerslist-info mt-2"> <a href="./Hillary_Goldwynn.html">
-              <img class="speakerslist-img rounded-circle" src="./images/speakers/Hillary_Goldwynn_tn.jpg"
-                alt="Photo of Hilary Goldywynn Post">
+          <p class="speakerslist-info mt-2"> <a href="${speaker["shortname"]}">
+              <img class="speakerslist-img rounded-circle" src="./images/speakers/${speaker["shortname"]}_tn.jpg"
+                alt="Photo of ${speaker["name"]}">
             </a>
           </p>
         </div>
-        <div class="col-md text-center">
-          <h4 class="speakerslist-title">The Art of Abstract</h4>
-          <div class="speakerslist-name">with
-            <a href="#">Riley Rudolph Rewington</a>
-          </div>
-          <p class="speakerslist-info mt-2"> <a href="#">
-              <img class="speakerslist-img rounded-circle" src="./images/speakers/Riley_Rewington_tn.jpg"
-                alt="Photo of Riley Rudolph Rewington">
-            </a>
-          </p>
-        </div>
+
+       </#list>
       </div>
     </div>
   </article>
@@ -104,3 +94,5 @@
       </aside>
     </div>
   </div>
+
+<#include "./parts/footer.ftl">
