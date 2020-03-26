@@ -35,6 +35,15 @@ public class MyController {
         return "speakers";
     }
 
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
+    public String feedbackMapping(Model model)  {
+
+        model.addAttribute("speakers", speakers);
+        model.addAttribute("feedback", speakers);
+        model.addAttribute("title", "Roux - Speakers");
+        return "feedback";
+    }
+
     @RequestMapping(value = "/speakers/{name}", method = RequestMethod.GET)
     public String speakerMapping(Model model, @PathVariable String name)  {
 

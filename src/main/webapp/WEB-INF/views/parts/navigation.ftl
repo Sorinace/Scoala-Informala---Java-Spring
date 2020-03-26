@@ -20,7 +20,7 @@
                 </#list>
               </div>
             </li>
-            <li class="nav-item"> <a href="/feedback.html" class="nav-link">Feedback</a>
+            <li class="nav-item"> <a href="/feedback" class="nav-link">Feedback</a>
             </li>
           </ul>
         </div>

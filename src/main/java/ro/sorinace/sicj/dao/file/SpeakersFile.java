@@ -10,20 +10,11 @@ import java.util.HashMap;
 
 @Configuration
 public class SpeakersFile {
-    private HashMap fileRead = (HashMap)readJson("src/main/webapp/resources/data/speakers.json");
+    private HashMap fileRead = (HashMap)ReadJson.readJson("src/main/webapp/resources/data/speakers.json");
 
     @Bean
     public ArrayList<HashMap> getSpeakers() {
         return (ArrayList) fileRead.get("speakers");
     }
 
-    public static Object readJson(String filename)  {
-        try {
-            FileReader reader = new FileReader(filename);
-            JSONParser jsonParser = new JSONParser(reader);
-            return jsonParser.parse();
-        } catch (Exception ex){
-            return ex;
-        }
-    };
 };
