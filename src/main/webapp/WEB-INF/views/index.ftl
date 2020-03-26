@@ -19,9 +19,9 @@
         <div class="col-md text-center">
           <h4 class="speakerslist-title">${speaker["title"]}</h4>
           <div class="speakerslist-name">with
-            <a href="${speaker["shortname"]}">${speaker["name"]}</a>
+            <a href="/speakers/${speaker["shortname"]}">${speaker["name"]}</a>
           </div>
-          <p class="speakerslist-info mt-2"> <a href="${speaker["shortname"]}">
+          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker["shortname"]}">
               <img class="speakerslist-img rounded-circle" src="./images/speakers/${speaker["shortname"]}_tn.jpg"
                 alt="Photo of ${speaker["name"]}">
             </a>
@@ -71,25 +71,7 @@
           <h1 class="sidebar-title">Artwork on display</h1>
           <p class="sidebar-body">While you attend the conference, head over to our gallery where you can check out some
             of the work from our speakers.</p>
-          <div class="pixgrid clearfix">
-            <img src="./images/artwork/Lorenzo_Garcia_01_tn.jpg" alt="Artwork 0">
-            <img src="./images/artwork/Lorenzo_Garcia_02_tn.jpg" alt="Artwork 1">
-            <img src="./images/artwork/Lorenzo_Garcia_03_tn.jpg" alt="Artwork 2">
-            <img src="./images/artwork/Lorenzo_Garcia_04_tn.jpg" alt="Artwork 3">
-            <img src="./images/artwork/Hillary_Goldwynn_01_tn.jpg" alt="Artwork 4">
-            <img src="./images/artwork/Hillary_Goldwynn_02_tn.jpg" alt="Artwork 5">
-            <img src="./images/artwork/Hillary_Goldwynn_03_tn.jpg" alt="Artwork 6">
-            <img src="./images/artwork/Hillary_Goldwynn_04_tn.jpg" alt="Artwork 7">
-            <img src="./images/artwork/Hillary_Goldwynn_05_tn.jpg" alt="Artwork 8">
-            <img src="./images/artwork/Hillary_Goldwynn_06_tn.jpg" alt="Artwork 9">
-            <img src="./images/artwork/Hillary_Goldwynn_07_tn.jpg" alt="Artwork 10">
-            <img src="./images/artwork/Riley_Rewington_01_tn.jpg" alt="Artwork 11">
-            <img src="./images/artwork/Riley_Rewington_02_tn.jpg" alt="Artwork 12">
-            <img src="./images/artwork/Riley_Rewington_03_tn.jpg" alt="Artwork 13">
-            <img src="./images/artwork/Riley_Rewington_04_tn.jpg" alt="Artwork 14">
-            <img src="./images/artwork/Riley_Rewington_05_tn.jpg" alt="Artwork 15">
-            <img src="./images/artwork/Riley_Rewington_06_tn.jpg" alt="Artwork 16">
-          </div>
+            <#include "./parts/allimg.ftl">
         </article>
       </aside>
     </div>

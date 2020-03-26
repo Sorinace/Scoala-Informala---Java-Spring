@@ -27,15 +27,26 @@ public class MyController {
         return "index";
     }
 
-    @RequestMapping(value = "{configKey}", method = RequestMethod.GET)
-    public String speakerMapping(Model model, @PathVariable String configKey)  {
-        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+    @RequestMapping(value = "/speakers", method = RequestMethod.GET)
+    public String speakerMapping(Model model)  {
 
         model.addAttribute("speakers", speakers);
-        //model.addAttribute("cale", configKey);
-        model.addAttribute("title", "Roux - Speakers page");
-        //model.addAttribute("time", LocalTime.now().format(dtf));
+        model.addAttribute("title", "Roux - Speakers");
         return "speakers";
+    }
+
+    @RequestMapping(value = "/speakers/{name}", method = RequestMethod.GET)
+    public String speakerMapping(Model model, @PathVariable String name)  {
+
+        for (HashMap artist: speakers) {
+            if (artist.get("shortname").equals(name)){
+                model.addAttribute("artist", artist);
+            }
+        }
+
+        model.addAttribute("speakers", speakers);
+        model.addAttribute("title", "Roux - " + name);
+        return "speaker";
     }
 
 
