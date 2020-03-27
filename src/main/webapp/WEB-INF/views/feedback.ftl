@@ -1,7 +1,5 @@
 <#include "./parts/header.ftl">
-<#list feedback as feed>
-    ${feed["summary"]} <br/>
-</#list>
+
 
   </header>
 
@@ -37,42 +35,21 @@
           <h1>Recent Feedback</h1>
 
           <div class="feedback-items">
-
-            <div class="feedback-item item-list media-list">
-              <div class="feedback-item media">
-                <div class="feedback-info media-body">
-                  <div class="feedback-head">
-                    <div class="feedback-title">Impressive</div>
-                    <small>by Jane</small>
-                  </div>
-                  <div class="feedback-message">Please do it again</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="feedback-item item-list media-list">
-              <div class="feedback-item media">
-                <div class="feedback-info media-body">
-                  <div class="feedback-head">
-                    <div class="feedback-title">I'll be back
+            <#list feedback as feed>
+                <div class="feedback-item item-list media-list">
+                  <div class="feedback-item media">
+                    <div class="feedback-info media-body">
+                      <div class="feedback-head">
+                        <div class="feedback-title">${feed["title"]}</div>
+                        <small>by ${feed["name"]}</small>
+                      </div>
+                      <div class="feedback-message">${feed["message"]}</div>
                     </div>
-                    <small>by James</small>
                   </div>
-                  <div class="feedback-message">I'm happy that I was there</div>
                 </div>
-              </div>
-            </div>
-            <div class="feedback-item item-list media-list">
-              <div class="feedback-item media">
-                <div class="feedback-info media-body">
-                  <div class="feedback-head">
-                    <div class="feedback-title">Great Speaker</div>
-                    <small>by Melissa</small>
-                  </div>
-                  <div class="feedback-message">This was a great meetup!</div>
-                </div>
-              </div>
-            </div>
+
+            </#list>
+
           </div>
         </div>
       </aside>
