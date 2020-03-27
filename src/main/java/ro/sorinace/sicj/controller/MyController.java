@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ro.sorinace.sicj.dao.db.FeedbackDBI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,9 @@ public class MyController {
 
     @Autowired
     private ArrayList<HashMap> getFeedbackFile;
+
+    @Autowired
+    private FeedbackDBI feedbackCBI;
 
     @RequestMapping
     public String rootMapping (Model model)  {
@@ -43,7 +47,7 @@ public class MyController {
     public String feedbackMapping(Model model)  {
 
         model.addAttribute("speakers", getSpeakersFile);
-        model.addAttribute("feedback", getFeedbackFile);
+        model.addAttribute("feedback", feedbackCBI.findAll());
         model.addAttribute("title", "Roux - Speakers");
         return "feedback";
     }

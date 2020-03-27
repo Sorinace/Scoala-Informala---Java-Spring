@@ -33,22 +33,22 @@
       <aside class="col-md-8">
         <div class="maincontent feedback">
           <h1>Recent Feedback</h1>
-
           <div class="feedback-items">
+
             <#list feedback as feed>
                 <div class="feedback-item item-list media-list">
                   <div class="feedback-item media">
                     <div class="feedback-info media-body">
                       <div class="feedback-head">
-                        <div class="feedback-title">${feed["title"]}</div>
-                        <small>by ${feed["name"]}</small>
+                        <div class="feedback-title">${feed.getTitle()}</div>
+                        <small>by ${feed.getName()}</small>
                       </div>
-                      <div class="feedback-message">${feed["message"]}</div>
+                      <div class="feedback-message">${feed.getMessage()}</div>
                     </div>
                   </div>
                 </div>
 
-            </#list>
+             </#list>
 
           </div>
         </div>
