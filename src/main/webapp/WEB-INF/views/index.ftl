@@ -1,34 +1,23 @@
 <#include "./parts/header.ftl">
 
-<!-- <h2>FreeMarker View</h3>
-	<div> Message:
-	<#list speakers as speaker>
-         <#list speaker?keys as key>
-                <#if key == "name">
-                  ${speaker[key]} <br/>
-                </#if>
-         </#list>
-    </#list>
-    </div>	-->
-
   <article class="speakerslist jumbotron d-none d-sm-block">
     <div class="container">
       <div class="row">
-      <#list speakers as speaker>
 
+      <#list speakers as speaker>
         <div class="col-md text-center">
-          <h4 class="speakerslist-title">${speaker["title"]}</h4>
+          <h4 class="speakerslist-title">${speaker.getTitle()}</h4>
           <div class="speakerslist-name">with
-            <a href="/speakers/${speaker["shortname"]}">${speaker["name"]}</a>
+            <a href="/speakers/${speaker.getShortname()}">${speaker.getName()}</a>
           </div>
-          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker["shortname"]}">
-              <img class="speakerslist-img rounded-circle" src="./images/speakers/${speaker["shortname"]}_tn.jpg"
-                alt="Photo of ${speaker["name"]}">
+          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker.getShortname()}">
+              <img class="speakerslist-img rounded-circle" src="./images/speakers/${speaker.getShortname()}_tn.jpg"
+                alt="Photo of ${speaker.getName()}">
             </a>
           </p>
         </div>
-
        </#list>
+
       </div>
     </div>
   </article>

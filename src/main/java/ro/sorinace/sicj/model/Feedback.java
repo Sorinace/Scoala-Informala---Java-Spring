@@ -95,7 +95,7 @@ public class Feedback {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
+        final StringBuilder sb = new StringBuilder("Latest feedback{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", email='").append(email).append('\'');

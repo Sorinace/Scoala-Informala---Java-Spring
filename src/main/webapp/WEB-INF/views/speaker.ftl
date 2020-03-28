@@ -5,15 +5,15 @@
       <div class="col-md-8">
         <article class="speakerslist maincontent">
 
-          <h1 class="speakerslist-title">${artist["title"]}</h1>
+          <h1 class="speakerslist-title">${speaker.getTitle()}</h1>
           <div class="speakerslist-name">with
-            <a href="/speakers/${artist["shortname"]}">${artist["name"]}</a>
+            <a href="/speakers/${speaker.getShortname()}">${speaker.getName()}</a>
           </div>
-          <p class="speakerslist-info mt-2"> <a href="/speakers/${artist["shortname"]}">
+          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker.getShortname()}">
             </a>
-            <img class="speakerslist-img img-fluid" src="/images/speakers/${artist["shortname"]}.jpg"
-              alt="Photo of ${artist["name"]}">
-          </p>${artist["summary"]}</p>
+            <img class="speakerslist-img img-fluid" src="/images/speakers/${speaker.getShortname()}.jpg"
+              alt="Photo of ${speaker.getName()}">
+          </p>${speaker.getSummary()}</p>
 
         </article>
       </div>
@@ -23,9 +23,11 @@
           <p class="sidebar-body">While you attend the conference, head over to our gallery where you can
             check out some of the work from our speakers.</p>
             <div class="pixgrid clearfix">
-              <#list artist["artwork"] as picture>
+
+              <#list speakers as picture>
                    <img src="/images/artwork/${picture}" alt="Artwork ${picture?index}">
               </#list>
+
             </div>
       </aside>
     </div>

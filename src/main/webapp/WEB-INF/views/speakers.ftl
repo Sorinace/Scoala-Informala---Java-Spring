@@ -7,19 +7,19 @@
 
         <#list speakers as speaker>
           <div class="mb-4">
-            <h4 class="speakerslist-title">${speaker["title"]}</h4>
+            <h4 class="speakerslist-title">${speaker.getTitle()}</h4>
             <div class="speakerslist-name">with
-              <a href="/speakers/${speaker["shortname"]}">${speaker["name"]}</a>
+              <a href="/speakers/${speaker.getShortname()}">${speaker.getName()}</a>
             </div>
             <div class="row speakerslist-info mt-2">
               <div class="col-sm-3">
-                <a href="/speakers/${speaker["shortname"]}">
-                  <img class="speakerslist-img rounded-circle img-fluid" src="/images/speakers/${speaker["shortname"]}_tn.jpg"
-                    alt="Photo of ${speaker["name"]}">
+                <a href="/speakers/${speaker.getShortname()}">
+                  <img class="speakerslist-img rounded-circle img-fluid" src="/images/speakers/${speaker.getShortname()}_tn.jpg"
+                    alt="Photo of ${speaker.getName()}">
                 </a>
               </div>
               <div class="col-sm-9">
-                ${speaker["summary"]}
+                ${speaker.getSummary()}
               </div>
             </div>
           </div>

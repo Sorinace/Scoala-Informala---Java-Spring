@@ -16,7 +16,7 @@
                 <a class="dropdown-item" href="/speakers">All Speakers</a>
                 <div class="dropdown-divider"></div>
                 <#list speakers as speaker>
-                  <a class="dropdown-item" href="/speakers/${speaker["shortname"]}"> ${speaker["name"]}  </a>
+                  <a class="dropdown-item" href="/speakers/${speaker.getShortname()}"> ${speaker.getName()}  </a>
                 </#list>
               </div>
             </li>

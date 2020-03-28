@@ -1,3 +1,3 @@
-INSERT INTO feedback(name, email, title, message, visible) VALUES('Frank', 'frank-smith@gmail.com', 'Best Meetup Ever', 'I really love this meetup. Please don''t let it end.');
-INSERT INTO feedback(name, email, title, message, visible) VALUES('Jane', 'jane-miller@gmail.com', 'Meeting Time', 'Would you consider moving the meeting time 30 minutes to about 6pm. It''s tough to make it to the meetings on time right after work.');
-INSERT INTO feedback(name, email, title, message, visible) VALUES('Roy', 'roy-jones@gmail.com', 'Great Speaker', 'I really enjoyed the speaker this month. Would love to hear another presentation.');
+INSERT INTO feedback(name, email, title, message, visible) VALUES('Frank', 'frank-smith@gmail.com', 'Best Meetup Ever', 'I really love this meetup. Please don''t let it end.', true);
+INSERT INTO feedback(name, email, title, message, visible) VALUES('Jane', 'jane-miller@gmail.com', 'Meeting Time', 'Would you consider moving the meeting time 30 minutes to about 6pm. It''s tough to make it to the meetings on time right after work.', true);
+INSERT INTO feedback(name, email, title, message, visible) VALUES('Roy', 'roy-jones@gmail.com', 'Great Speaker', 'I really enjoyed the speaker this month. Would love to hear another presentation.', true);

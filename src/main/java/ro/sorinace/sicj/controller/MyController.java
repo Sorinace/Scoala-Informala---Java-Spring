@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ro.sorinace.sicj.dao.db.FeedbackDBI;
+import ro.sorinace.sicj.dao.db.SpeakersDBI;
+import ro.sorinace.sicj.model.Speakers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,30 +17,40 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/")
 public class MyController {
+//    /**
+//     * read speakers data from file speakers.json
+//     */
+//    @Autowired
+//    private ArrayList<HashMap> getSpeakersFile;
+//    /**
+//     * read feedback data from file feedback.json
+//     */
+//    @Autowired
+//    private ArrayList<HashMap> getFeedbackFile;
 
+    /**
+     * read speakers data from DB
+     */
     @Autowired
-    private ArrayList<HashMap> getSpeakersFile;
-
-    @Autowired
-    private ArrayList<HashMap> getFeedbackFile;
-
+    private SpeakersDBI speakersDBI;
+    /**
+     * read feedback data from DB
+     */
     @Autowired
     private FeedbackDBI feedbackCBI;
 
     @RequestMapping
     public String rootMapping (Model model)  {
-        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
-        model.addAttribute("speakers", getSpeakersFile);
+        model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("title", "Roux - Main page");
-        //model.addAttribute("time", LocalTime.now().format(dtf));
         return "index";
     }
 
     @RequestMapping(value = "/speakers", method = RequestMethod.GET)
     public String speakerMapping(Model model)  {
 
-        model.addAttribute("speakers", getSpeakersFile);
+        model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("title", "Roux - Speakers");
         return "speakers";
     }
@@ -46,22 +58,22 @@ public class MyController {
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public String feedbackMapping(Model model)  {
 
-        model.addAttribute("speakers", getSpeakersFile);
+        model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackCBI.findAll());
-        model.addAttribute("title", "Roux - Speakers");
+        model.addAttribute("title", "Roux - Feedback");
         return "feedback";
     }
 
     @RequestMapping(value = "/speakers/{name}", method = RequestMethod.GET)
     public String speakerMapping(Model model, @PathVariable String name)  {
 
-        for (HashMap artist: getSpeakersFile) {
-            if (artist.get("shortname").equals(name)){
-                model.addAttribute("artist", artist);
+        for (Speakers artist: speakersDBI.findAll()) {
+            if (artist.getShortname().equals(name)){
+                model.addAttribute("speaker", artist);
             }
         }
 
-        model.addAttribute("speakers", getSpeakersFile);
+        model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("title", "Roux - " + name);
         return "speaker";
     }
