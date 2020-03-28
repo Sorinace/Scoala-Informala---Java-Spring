@@ -16,6 +16,7 @@ public class Speakers {
     private String shortname;
     private String summary;
     private String description;
+    //private Artwork[] artworks = null;
 
     public Speakers() {}
 
@@ -73,17 +74,26 @@ public class Speakers {
         this.description = description;
     }
 
+//    public Artwork[] getArtworks() {
+//        return artworks;
+//    }
+//
+//    public void setArtworks(Artwork[] artworks) {
+//        this.artworks = artworks;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Speakers feedback = (Speakers) o;
-        return Objects.equals(id, feedback.id) &&
-                Objects.equals(name, feedback.name) &&
-                Objects.equals(shortname, feedback.shortname) &&
-                Objects.equals(title, feedback.title) &&
-                Objects.equals(summary, feedback.summary) &&
-                Objects.equals(description, feedback.description);
+        Speakers speaker = (Speakers) o;
+        return Objects.equals(id, speaker.id) &&
+                Objects.equals(name, speaker.name) &&
+                Objects.equals(shortname, speaker.shortname) &&
+                Objects.equals(title, speaker.title) &&
+                Objects.equals(summary, speaker.summary) &&
+                Objects.equals(description, speaker.description);
+      //          Objects.equals(artworks, speaker.artworks);
     }
 
     @Override
@@ -100,6 +110,7 @@ public class Speakers {
         sb.append(", shortname='").append(shortname).append('\'');
         sb.append(", summary='").append(summary).append('\'');
         sb.append(", description='").append(description).append('\'');
+   //     sb.append(", artworks='").append(artworks.toString()).append('\'');
         sb.append('}');
         return sb.toString();
     }

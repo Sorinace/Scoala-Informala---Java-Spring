@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ro.sorinace.sicj.dao.db.ArtworkDBI;
 import ro.sorinace.sicj.dao.db.FeedbackDBI;
 import ro.sorinace.sicj.dao.db.SpeakersDBI;
+import ro.sorinace.sicj.model.Artwork;
 import ro.sorinace.sicj.model.Speakers;
 
 import java.util.ArrayList;
@@ -39,10 +41,14 @@ public class MyController {
     @Autowired
     private FeedbackDBI feedbackCBI;
 
+    @Autowired
+    private ArtworkDBI artworkDBI;
+
     @RequestMapping
     public String rootMapping (Model model)  {
 
         model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("artworks", artworkDBI.findAll());
         model.addAttribute("title", "Roux - Main page");
         return "index";
     }
@@ -51,6 +57,7 @@ public class MyController {
     public String speakerMapping(Model model)  {
 
         model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("artworks", artworkDBI.findAll());
         model.addAttribute("title", "Roux - Speakers");
         return "speakers";
     }
@@ -70,6 +77,7 @@ public class MyController {
         for (Speakers artist: speakersDBI.findAll()) {
             if (artist.getShortname().equals(name)){
                 model.addAttribute("speaker", artist);
+                model.addAttribute("artworks", artworkDBI.findAll());
             }
         }
 

@@ -24,8 +24,8 @@
             check out some of the work from our speakers.</p>
             <div class="pixgrid clearfix">
 
-              <#list speakers as picture>
-                   <img src="/images/artwork/${picture}" alt="Artwork ${picture?index}">
+              <#list artworks as picture>
+                   <img src="/images/artwork/${picture.getPicture()}" alt="Artwork ${picture?index}">
               </#list>
 
             </div>

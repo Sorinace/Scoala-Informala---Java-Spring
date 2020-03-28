@@ -1,9 +1,7 @@
 <div class="pixgrid clearfix">
     <#assign x = 0>
-       <#list speakers as speaker>
-
-              <img src="/images/artwork/01.jpg" alt="Artwork ${x}">
+       <#list artworks as picture>
+              <img src="/images/artwork/${picture.getPicture()}" alt="Artwork ${x}">
               <#assign x++>
-
        </#list>
     </div>
