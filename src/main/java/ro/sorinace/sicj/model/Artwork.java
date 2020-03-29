@@ -1,5 +1,7 @@
 package ro.sorinace.sicj.model;
 
+import ro.sorinace.sicj.dao.db.ArtworkDBI;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

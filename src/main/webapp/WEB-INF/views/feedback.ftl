@@ -46,6 +46,7 @@
                       <div class="feedback-message">${feed.getMessage()}</div>
                     </div>
                   </div>
+                  <#include "./parts/crud.ftl">
                 </div>
              </#list>
 

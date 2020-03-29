@@ -1,5 +1,6 @@
 package ro.sorinace.sicj.dao.db;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ro.sorinace.sicj.model.Feedback;
 import ro.sorinace.sicj.model.Speakers;
@@ -13,4 +14,11 @@ import ro.sorinace.sicj.model.Speakers;
  * boolean existsById(ID primaryKey): Checks if the entity for the given id exists or not.
  */
 public interface SpeakersDBI extends CrudRepository<Speakers, Long> {
+    /**
+     * @autor Sorin
+     * @param shortname for the speaker
+     * @return the speaker with the that shortname
+     */
+    @Query("SELECT speaker FROM Speakers speaker WHERE speaker.shortname = ?1")
+    Speakers findByName(String shortname);
 }

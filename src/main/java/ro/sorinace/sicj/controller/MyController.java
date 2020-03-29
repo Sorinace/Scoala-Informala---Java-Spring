@@ -1,20 +1,15 @@
 package ro.sorinace.sicj.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ro.sorinace.sicj.dao.db.ArtworkDBI;
-import ro.sorinace.sicj.dao.db.FeedbackDBI;
 import ro.sorinace.sicj.dao.db.SpeakersDBI;
-import ro.sorinace.sicj.model.Artwork;
 import ro.sorinace.sicj.model.Speakers;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import ro.sorinace.sicj.service.FeedbackService;
 
 @Controller
 @RequestMapping("/")
@@ -39,7 +34,7 @@ public class MyController {
      * read feedback data from DB
      */
     @Autowired
-    private FeedbackDBI feedbackCBI;
+    private FeedbackService feedbackCBI;
 
     @Autowired
     private ArtworkDBI artworkDBI;
@@ -74,17 +69,10 @@ public class MyController {
     @RequestMapping(value = "/speakers/{name}", method = RequestMethod.GET)
     public String speakerMapping(Model model, @PathVariable String name)  {
 
-        for (Speakers artist: speakersDBI.findAll()) {
-            if (artist.getShortname().equals(name)){
-                model.addAttribute("speaker", artist);
-                model.addAttribute("artworks", artworkDBI.findAll());
-            }
-        }
-
+        model.addAttribute("artworks", artworkDBI.findBySpeakerId(speakersDBI.findByName(name).getId()));
+        model.addAttribute("speaker", speakersDBI.findByName(name));
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("title", "Roux - " + name);
         return "speaker";
     }
-
-
 }

@@ -6,7 +6,6 @@ import ro.sorinace.sicj.dao.db.FeedbackDBI;
 import ro.sorinace.sicj.model.Feedback;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class FeedbackService {
@@ -15,9 +14,9 @@ public class FeedbackService {
         @Autowired
         private FeedbackDBI feedbackCBI;
 
-        public List<Feedback> findAll() {
-            ArrayList<Feedback>  it = (ArrayList<Feedback>) feedbackCBI.findAll();
-            return it;
+        public ArrayList<Feedback> findAll() {
+
+            return (ArrayList<Feedback>) feedbackCBI.findAll();
         }
 
         public Long count() {
