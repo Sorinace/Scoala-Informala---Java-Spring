@@ -8,9 +8,9 @@
         <div class="col-md text-center">
           <h4 class="speakerslist-title">${speaker.getTitle()}</h4>
           <div class="speakerslist-name">with
-            <a href="/speakers/${speaker.getShortname()}">${speaker.getName()}</a>
+            <a href="/speakers/${speaker.getId()}">${speaker.getName()}</a>
           </div>
-          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker.getShortname()}">
+          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker.getId()}">
               <img class="speakerslist-img rounded-circle" src="./images/speakers/${speaker.getShortname()}_tn.jpg"
                 alt="Photo of ${speaker.getName()}">
             </a>

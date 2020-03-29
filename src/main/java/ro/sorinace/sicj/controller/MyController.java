@@ -66,13 +66,13 @@ public class MyController {
         return "feedback";
     }
 
-    @RequestMapping(value = "/speakers/{name}", method = RequestMethod.GET)
-    public String speakerMapping(Model model, @PathVariable String name)  {
+    @RequestMapping(value = "/speakers/{id}", method = RequestMethod.GET)
+    public String speakerMapping(Model model, @PathVariable Long id)  {
 
-        model.addAttribute("artworks", artworkDBI.findBySpeakerId(speakersDBI.findByName(name).getId()));
-        model.addAttribute("speaker", speakersDBI.findByName(name));
+        model.addAttribute("artworks", artworkDBI.findBySpeakerId(id));
+        model.addAttribute("speaker", speakersDBI.findById(id).get());
         model.addAttribute("speakers", speakersDBI.findAll());
-        model.addAttribute("title", "Roux - " + name);
+        model.addAttribute("title", "Roux - artist");
         return "speaker";
     }
 }

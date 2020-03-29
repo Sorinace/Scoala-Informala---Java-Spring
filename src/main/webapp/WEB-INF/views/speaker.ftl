@@ -7,9 +7,9 @@
 
           <h1 class="speakerslist-title">${speaker.getTitle()}</h1>
           <div class="speakerslist-name">with
-            <a href="/speakers/${speaker.getShortname()}">${speaker.getName()}</a>
+            <a href="/speakers/${speaker.getId()}">${speaker.getName()}</a>
           </div>
-          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker.getShortname()}">
+          <p class="speakerslist-info mt-2"> <a href="/speakers/${speaker.getId()}">
             </a>
             <img class="speakerslist-img img-fluid" src="/images/speakers/${speaker.getShortname()}.jpg"
               alt="Photo of ${speaker.getName()}">

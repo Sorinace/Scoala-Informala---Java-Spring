@@ -9,11 +9,11 @@
           <div class="mb-4">
             <h4 class="speakerslist-title">${speaker.getTitle()}</h4>
             <div class="speakerslist-name">with
-              <a href="/speakers/${speaker.getShortname()}">${speaker.getName()}</a>
+              <a href="/speakers/${speaker.getId()}">${speaker.getName()}</a>
             </div>
             <div class="row speakerslist-info mt-2">
               <div class="col-sm-3">
-                <a href="/speakers/${speaker.getShortname()}">
+                <a href="/speakers/${speaker.getId()}">
                   <img class="speakerslist-img rounded-circle img-fluid" src="/images/speakers/${speaker.getShortname()}_tn.jpg"
                     alt="Photo of ${speaker.getName()}">
                 </a>
