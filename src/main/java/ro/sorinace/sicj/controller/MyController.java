@@ -82,7 +82,6 @@ public class MyController {
         feedbackDBI.save(feedback_form);
 
         model.addAttribute("feedback_form", feedback_form);
-        //model.addAttribute("feedback_update", feedback_form);
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback response");
