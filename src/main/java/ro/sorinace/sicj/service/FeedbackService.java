@@ -12,20 +12,20 @@ public class FeedbackService {
 
 
         @Autowired
-        private FeedbackDBI feedbackCBI;
+        private FeedbackDBI feedbackDBI;
 
         public ArrayList<Feedback> findAll() {
 
-            return (ArrayList<Feedback>) feedbackCBI.findAll();
+            return (ArrayList<Feedback>) feedbackDBI.findAll();
         }
 
         public Long count() {
 
-            return feedbackCBI.count();
+            return feedbackDBI.count();
         }
 
         public void deleteById(Long userId) {
 
-            feedbackCBI.deleteById(userId);
+            feedbackDBI.deleteById(userId);
         }
 }

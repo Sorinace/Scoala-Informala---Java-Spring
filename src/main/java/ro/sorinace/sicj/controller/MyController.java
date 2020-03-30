@@ -3,13 +3,11 @@ package ro.sorinace.sicj.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ro.sorinace.sicj.dao.db.ArtworkDBI;
+import ro.sorinace.sicj.dao.db.FeedbackDBI;
 import ro.sorinace.sicj.dao.db.SpeakersDBI;
-import ro.sorinace.sicj.model.Speakers;
-import ro.sorinace.sicj.service.FeedbackService;
+import ro.sorinace.sicj.model.Feedback;
 
 @Controller
 @RequestMapping("/")
@@ -34,7 +32,7 @@ public class MyController {
      * read feedback data from DB
      */
     @Autowired
-    private FeedbackService feedbackCBI;
+    private FeedbackDBI feedbackDBI;
 
     @Autowired
     private ArtworkDBI artworkDBI;
@@ -57,15 +55,6 @@ public class MyController {
         return "speakers";
     }
 
-    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
-    public String feedbackMapping(Model model)  {
-
-        model.addAttribute("speakers", speakersDBI.findAll());
-        model.addAttribute("feedback", feedbackCBI.findAll());
-        model.addAttribute("title", "Roux - Feedback");
-        return "feedback";
-    }
-
     @RequestMapping(value = "/speakers/{id}", method = RequestMethod.GET)
     public String speakerMapping(Model model, @PathVariable Long id)  {
 
@@ -74,5 +63,79 @@ public class MyController {
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("title", "Roux - artist");
         return "speaker";
+    }
+
+    @GetMapping(value = "/feedback")
+    public String feedbackMapping(Model model)  {
+
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback");
+        model.addAttribute("message", "Please add a feedback  message!");
+        return "feedback";
+    }
+
+    @PostMapping("/feedback")
+    public String addFeedback(Feedback feedback_form, Model model) {
+
+        feedback_form.setVisible(false);
+        feedbackDBI.save(feedback_form);
+
+        model.addAttribute("feedback_form", feedback_form);
+        model.addAttribute("feedback_update", feedback_form);
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback response");
+        model.addAttribute("message", feedback_form.getName() + " was added successfully!");
+
+        return "feedback";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String deleteFeedback(Model model, @PathVariable Long id) {
+
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback delete");
+        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message was successfully deleted!");
+
+        feedbackDBI.delete(feedbackDBI.findById(id).get());
+        return "feedback";
+    }
+
+    @RequestMapping("/publish/{id}")
+    public String publishFeedback(Model model, @PathVariable Long id) {
+        feedbackDBI.publishFeedback(id);
+
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback publish");
+        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message was publish successfully!");
+        return "feedback";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String updateRequestFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
+
+        model.addAttribute("feedback_form", feedback_form);
+        model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback update request");
+        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message you want to update?");
+        return "feedback";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
+        feedbackDBI.updateFeedback(id, feedback_form.getName(), feedback_form.getEmail(), feedback_form.getTitle(), feedback_form.getMessage());
+
+        model.addAttribute("feedback_form", feedback_form);
+        model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback update");
+        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message was updated!");
+        return "feedback";
     }
 }

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public interface ArtworkDBI extends CrudRepository<Artwork, Long> {
 
     /**
-     * @autor Sorin
+     * @author Sorin
      * @param id for the speaker
      * @return all the artwork which are made by the speaker with this id
      */

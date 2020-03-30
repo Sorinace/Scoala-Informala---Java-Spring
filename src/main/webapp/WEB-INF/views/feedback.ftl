@@ -7,27 +7,53 @@
     <div class="row">
       <div class="col-md-4">
         <div class="maincontent">
-          <h1>Send us feedback</h1>
-          <form class="feedback-form">
+          <h1>${message}</h1><br/>
+         <#if feedback_form?? >
+
+                    <form class="feedback-form" action="/update/${feedback_update.getId()}" method="post">
+                        <div class="form-group">
+                          <label for="feedback-form-name">Name</label>
+                          <input type="text" name = "name" class="form-control" id="feedback-form-name" value = "${feedback_update.getName()}">
+                        </div>
+                        <div class="form-group">
+                          <label for="feedback-form-email">E-Mail</label>
+                          <input type="text" name = "email" class="form-control" id="feedback-form-email" value = "${feedback_update.getEmail()}">
+                        </div>
+                        <div class="form-group">
+                          <label for="feedback-form-title">Title</label>
+                          <input type="text" name = "title" class="form-control" id="feedback-form-title" value = "${feedback_update.getTitle()}">
+                        </div>
+                        <div class="form-group">
+                          <label for="feedback-form-message">Message</label>
+                          <textarea type="text" name = "message" class="form-control"
+                            id="feedback-form-message" rows="6">${feedback_update.getMessage()}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary float-right">Submit</button>
+                      </form>
+
+         <#else>
+          <form class="feedback-form" action="/feedback" method="post">
             <div class="form-group">
               <label for="feedback-form-name">Name</label>
-              <input type="text" class="form-control" id="feedback-form-name" placeholder="Enter your name">
+              <input type="text" name = "name" class="form-control" id="feedback-form-name" placeholder="Enter your name">
             </div>
             <div class="form-group">
               <label for="feedback-form-email">E-Mail</label>
-              <input type="text" class="form-control" id="feedback-form-email" placeholder="Enter your email address">
+              <input type="text" name = "email" class="form-control" id="feedback-form-email" placeholder="Enter your email address">
             </div>
             <div class="form-group">
               <label for="feedback-form-title">Title</label>
-              <input type="text" class="form-control" id="feedback-form-title" placeholder="Title of your feedback">
+              <input type="text" name = "title" class="form-control" id="feedback-form-title" placeholder="Title of your feedback">
             </div>
             <div class="form-group">
               <label for="feedback-form-message">Message</label>
-              <textarea type="text" placeholder="Enter your message, then hit the submit button" class="form-control"
+              <textarea type="text" name = "message" placeholder="Enter your message, then hit the submit button" class="form-control"
                 id="feedback-form-message" rows="6"></textarea>
             </div>
             <button type="submit" class="btn btn-secondary float-right">Submit</button>
           </form>
+        </#if>
+
         </div>
       </div>
       <aside class="col-md-8">

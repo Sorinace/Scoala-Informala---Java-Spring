@@ -15,7 +15,7 @@ import ro.sorinace.sicj.model.Speakers;
  */
 public interface SpeakersDBI extends CrudRepository<Speakers, Long> {
     /**
-     * @autor Sorin
+     * @author Sorin
      * @param shortname for the speaker
      * @return the speaker with the that shortname
      */

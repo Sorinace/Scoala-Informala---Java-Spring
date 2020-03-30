@@ -71,6 +71,14 @@ public class Feedback {
         return visible;
     }
 
+    public String getVisibleSt() {
+
+        if(visible){
+            return "True";
+        }
+        return "False";
+    }
+
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }

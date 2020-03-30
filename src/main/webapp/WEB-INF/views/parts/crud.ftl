@@ -1,3 +1,6 @@
- <a href="/feedback/publish/${feed.getId()}">Publish</a> |
- <a href="/feedback/update/${feed.getId()}">Update</a> |
- <a href="/feedback/delete/${feed.getId()}">Delete</a>
+<#if !feed.getVisible()>
+ <a href="/publish/${feed.getId()}">Publish</a> |
+</#if>
+ <a href="/update/${feed.getId()}">Update</a> |
+ <a href="/delete/${feed.getId()}">Delete</a> |
+
