@@ -17,11 +17,15 @@ h1 {
 }
 
 h2 {
-  font-size: 1.8em;
+  font-size: 1.5em;
 }
 
 a {
   color: #DD4F53;
+}
+
+.hide {
+  color: #A9A9A9;
 }
 
 header .jumbotron {

@@ -1,5 +1,6 @@
 package ro.sorinace.sicj.dao.db;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -24,8 +25,8 @@ public interface FeedbackDBI extends CrudRepository<Feedback, Long> {
      */
     @Transactional
     @Modifying
-    @Query("UPDATE Feedback feedback SET visible = TRUE WHERE feedback.id = ?1")
-    void publishFeedback(Long id);
+    @Query("UPDATE Feedback feedback SET visible = ?2 WHERE feedback.id = ?1")
+    void visibleFeedback(Long id, Boolean visible);
 
     /**
      * @author Sorin

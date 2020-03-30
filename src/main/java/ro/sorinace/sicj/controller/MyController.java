@@ -71,7 +71,7 @@ public class MyController {
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback");
-        model.addAttribute("message", "Please add a feedback  message!");
+        model.addAttribute("message", "Send feedback:");
         return "feedback";
     }
 
@@ -82,35 +82,35 @@ public class MyController {
         feedbackDBI.save(feedback_form);
 
         model.addAttribute("feedback_form", feedback_form);
-        model.addAttribute("feedback_update", feedback_form);
+        //model.addAttribute("feedback_update", feedback_form);
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback response");
-        model.addAttribute("message", feedback_form.getName() + " was added successfully!");
+        model.addAttribute("message", "Thank you for feedback!");
 
         return "feedback";
     }
 
     @RequestMapping("/delete/{id}")
     public String deleteFeedback(Model model, @PathVariable Long id) {
+        feedbackDBI.delete(feedbackDBI.findById(id).get());
 
+        model.addAttribute("message", "Message deleted!");
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
-        model.addAttribute("title", "Roux - Feedback delete");
-        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message was successfully deleted!");
+        model.addAttribute("title", "Roux - Feedback deleted!");
 
-        feedbackDBI.delete(feedbackDBI.findById(id).get());
         return "feedback";
     }
 
-    @RequestMapping("/publish/{id}")
-    public String publishFeedback(Model model, @PathVariable Long id) {
-        feedbackDBI.publishFeedback(id);
+    @RequestMapping("/publish/{id}/{visible}")
+    public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
+        feedbackDBI.visibleFeedback(id, visible);
 
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback publish");
-        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message was publish successfully!");
+        model.addAttribute("message", "Change the visibility!");
         return "feedback";
     }
 
@@ -122,7 +122,7 @@ public class MyController {
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback update request");
-        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message you want to update?");
+        model.addAttribute("message", "Change the message:");
         return "feedback";
     }
 
@@ -131,11 +131,10 @@ public class MyController {
         feedbackDBI.updateFeedback(id, feedback_form.getName(), feedback_form.getEmail(), feedback_form.getTitle(), feedback_form.getMessage());
 
         model.addAttribute("feedback_form", feedback_form);
-        model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback update");
-        model.addAttribute("message", feedbackDBI.findById(id).get().getName() + "' message was updated!");
+        model.addAttribute("message", "Message updated!");
         return "feedback";
     }
 }

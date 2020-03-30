@@ -7,9 +7,9 @@
     <div class="row">
       <div class="col-md-4">
         <div class="maincontent">
-          <h1>${message}</h1><br/>
-         <#if feedback_form?? >
+          <h2>${message}</h2><br/>
 
+         <#if feedback_update?? >
                     <form class="feedback-form" action="/update/${feedback_update.getId()}" method="post">
                         <div class="form-group">
                           <label for="feedback-form-name">Name</label>
@@ -62,7 +62,11 @@
           <div class="feedback-items">
 
             <#list feedback as feed>
-                <div class="feedback-item item-list media-list">
+               <#if feed.getVisible()>
+                  <div class="feedback-item item-list media-list ">
+               <#else>
+                  <div class="feedback-item item-list media-list hide">
+               </#if>
                   <div class="feedback-item media">
                     <div class="feedback-info media-body">
                       <div class="feedback-head">
