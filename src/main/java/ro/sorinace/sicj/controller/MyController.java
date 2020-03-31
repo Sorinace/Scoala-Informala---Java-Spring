@@ -1,6 +1,7 @@
 package ro.sorinace.sicj.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +91,14 @@ public class MyController {
         return "feedback";
     }
 
+    @RequestMapping("/login")
+    public String getLoginPages(Model model){
+
+        return "login";
+    }
+
     @RequestMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteFeedback(Model model, @PathVariable Long id) {
         feedbackDBI.delete(feedbackDBI.findById(id).get());
 
@@ -103,6 +111,7 @@ public class MyController {
     }
 
     @RequestMapping("/publish/{id}/{visible}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
         feedbackDBI.visibleFeedback(id, visible);
 
@@ -114,6 +123,7 @@ public class MyController {
     }
 
     @RequestMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String updateRequestFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
 
         model.addAttribute("feedback_form", feedback_form);
@@ -126,6 +136,7 @@ public class MyController {
     }
 
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String updateFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
         feedbackDBI.updateFeedback(id, feedback_form.getName(), feedback_form.getEmail(), feedback_form.getTitle(), feedback_form.getMessage());
 
