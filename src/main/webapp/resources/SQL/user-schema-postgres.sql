@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS username;
+CREATE TABLE username(user_id SERIAL PRIMARY KEY, username VARCHAR(128) NOT NULL UNIQUE, password VARCHAR(256));
