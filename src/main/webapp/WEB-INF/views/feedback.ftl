@@ -69,10 +69,10 @@
           <div class="feedback-items">
 
             <#list feedback as feed>
-               <#if feed.getVisible()>
-                  <div class="feedback-item item-list media-list ">
-               <#else>
+               <#if !feed.getVisible() && admin>
                   <div class="feedback-item item-list media-list hide">
+               <#else>
+                  <div class="feedback-item item-list media-list ">
                </#if>
                   <div class="feedback-item media">
                     <div class="feedback-info media-body">

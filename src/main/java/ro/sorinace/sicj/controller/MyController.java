@@ -128,18 +128,23 @@ public class MyController implements ErrorController {
 
         boolean hasAdminRole = authentication.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("admin", hasAdminRole);
 
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback");
         model.addAttribute("message", "Send feedback:");
-        model.addAttribute("admin", hasAdminRole);
 
         return "feedback";
     }
 
     @PostMapping("/feedback")
     public String addFeedback(Feedback feedback_form, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("admin", hasAdminRole);
         feedback_form.setVisible(false);
         feedbackDBI.save(feedback_form);
 
@@ -156,6 +161,12 @@ public class MyController implements ErrorController {
     @RequestMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteFeedback(Model model, @PathVariable Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("admin", hasAdminRole);
+
         feedbackDBI.delete(feedbackDBI.findById(id).get());
 
         model.addAttribute("message", "Message deleted!");
@@ -169,6 +180,12 @@ public class MyController implements ErrorController {
     @RequestMapping("/publish/{id}/{visible}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("admin", hasAdminRole);
+
         feedbackDBI.visibleFeedback(id, visible);
 
         model.addAttribute("speakers", speakersDBI.findAll());
@@ -181,6 +198,11 @@ public class MyController implements ErrorController {
     @RequestMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String updateRequestFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("admin", hasAdminRole);
 
         model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
@@ -195,6 +217,12 @@ public class MyController implements ErrorController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public String updateFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
         feedbackDBI.updateFeedback(id, feedback_form.getName(), feedback_form.getEmail(), feedback_form.getTitle(), feedback_form.getMessage());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("admin", hasAdminRole);
 
         model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("speakers", speakersDBI.findAll());
