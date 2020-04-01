@@ -9,7 +9,14 @@
         <div class="maincontent">
           <h2>${message}</h2><br/>
 
-         <#if feedback_update?? >
+          <#if error??>
+            <div class="container main-content">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-danger"><h1>FORBIDDEN</h1></li>
+                    <li class="list-group-item">${error}</li>
+                </ul>
+            </div>
+         <#elseif feedback_update?? >
                     <form class="feedback-form" action="/update/${feedback_update.getId()}" method="post">
                         <div class="form-group">
                           <label for="feedback-form-name">Name</label>
@@ -28,7 +35,7 @@
                           <textarea type="text" name = "message" class="form-control"
                             id="feedback-form-message" rows="6">${feedback_update.getMessage()}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-secondary float-right">Submit</button>
+                        <button type="submit" class="btn btn-secondary float-right">Update</button>
                       </form>
 
          <#else>
@@ -76,7 +83,9 @@
                       <div class="feedback-message">${feed.getMessage()}</div>
                     </div>
                   </div>
-                  <#include "./parts/crud.ftl">
+                  <#if admin>
+                        <#include "./parts/crud.ftl">
+                  </#if>
                 </div>
              </#list>
 

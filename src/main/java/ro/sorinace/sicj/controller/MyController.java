@@ -1,7 +1,11 @@
 package ro.sorinace.sicj.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +14,12 @@ import ro.sorinace.sicj.dao.db.FeedbackDBI;
 import ro.sorinace.sicj.dao.db.SpeakersDBI;
 import ro.sorinace.sicj.model.Feedback;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/")
-public class MyController {
+public class MyController implements ErrorController {
 //    /**
 //     * read speakers data from file speakers.json
 //     */
@@ -38,6 +45,43 @@ public class MyController {
     @Autowired
     private ArtworkDBI artworkDBI;
 
+    private static final String PATH = "/error";
+
+    @Override
+    public String getErrorPath() {
+        return PATH;
+    }
+
+    @RequestMapping(value = PATH)
+    public String errorPage(Model model, HttpServletRequest request) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("message", "Request ERROR:");
+        model.addAttribute("title", "Roux - ERROR");
+
+        if (status != null) {
+            Integer statusCode = Integer.valueOf(status.toString());
+
+            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+                model.addAttribute("error", "Page request was not found: error-404");
+            }
+            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                model.addAttribute("error", "Server don't respond: error-500");
+            }
+            else if(statusCode == HttpStatus.FORBIDDEN.value()) {
+                model.addAttribute("feedback", feedbackDBI.findAll());
+                model.addAttribute("error", "You have no right for this action.<br/>Please contact the administrator! ");
+                return "feedback";
+            }
+            else{
+                model.addAttribute("error", "General error: " + status.toString());
+            }
+
+        }
+
+        return "error";
+    }
+
     @RequestMapping
     public String rootMapping (Model model)  {
 
@@ -45,6 +89,18 @@ public class MyController {
         model.addAttribute("artworks", artworkDBI.findAll());
         model.addAttribute("title", "Roux - Main page");
         return "index";
+    }
+
+    @RequestMapping("/login")
+    public String getLoginPages(Model model){
+
+        return "login";
+    }
+
+    @RequestMapping("/logout-success")
+    public String getLogoutPages(Model model){
+
+        return "logout";
     }
 
     @RequestMapping(value = "/speakers", method = RequestMethod.GET)
@@ -68,17 +124,22 @@ public class MyController {
 
     @GetMapping(value = "/feedback")
     public String feedbackMapping(Model model)  {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
 
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback");
         model.addAttribute("message", "Send feedback:");
+        model.addAttribute("admin", hasAdminRole);
+
         return "feedback";
     }
 
     @PostMapping("/feedback")
     public String addFeedback(Feedback feedback_form, Model model) {
-
         feedback_form.setVisible(false);
         feedbackDBI.save(feedback_form);
 
@@ -91,11 +152,6 @@ public class MyController {
         return "feedback";
     }
 
-    @RequestMapping("/login")
-    public String getLoginPages(Model model){
-
-        return "login";
-    }
 
     @RequestMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

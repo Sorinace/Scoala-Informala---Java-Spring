@@ -1,5 +1,4 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
 <head>
     <title>Login</title>
 </head>
@@ -8,12 +7,8 @@
 <div layout:fragment="content">
     <div class="container main-content">
         <h3>Landon Hotel Employee Login</h3>
-        <form th:action="@{/login}" method="post">
-            <div th:if="${param.error}">
-                <div class="alert alert-danger">
-                    Invalid username or password.
-                </div>
-            </div>
+        <form action="/login" method="post">
+
             <div class="form-group row">
                 <label for="username" class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-6">

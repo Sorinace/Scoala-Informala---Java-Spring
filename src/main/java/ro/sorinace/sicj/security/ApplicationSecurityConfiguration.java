@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ro.sorinace.sicj.service.UsernameServices;
 
 /**
@@ -56,6 +57,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         "/images/artwork/*","/images/speakers/*").permitAll()
                 .anyRequest().authenticated()
         .and()
-        .httpBasic();
+        .formLogin()
+        .loginPage("/login").permitAll()
+        .and()
+        .logout().invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessUrl("/logout-success").permitAll();
     }
 }

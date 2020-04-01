@@ -22,6 +22,8 @@
             </li>
             <li class="nav-item"> <a href="/feedback" class="nav-link">Feedback</a>
             </li>
+            <li class="nav-item"> <a href="/login" class="nav-link">Login</a>
+            </li>
           </ul>
         </div>
       </div>
