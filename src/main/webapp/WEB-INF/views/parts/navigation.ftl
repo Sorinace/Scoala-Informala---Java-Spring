@@ -22,8 +22,12 @@
             </li>
             <li class="nav-item"> <a href="/feedback" class="nav-link">Feedback</a>
             </li>
-            <li class="nav-item"> <a href="/login" class="nav-link">Login</a>
-            </li>
+            <li class="nav-item"> | </li>
+               <#if admin>
+                    <li class="nav-item"> <a href="/logout" class="nav-link">Logout</a></li>
+                <#else>
+                    <li class="nav-item"> <a href="/login" class="nav-link">Login</a></li>
+                </#if>
           </ul>
         </div>
       </div>

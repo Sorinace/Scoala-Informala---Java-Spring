@@ -28,6 +28,11 @@ a {
   color: #A9A9A9;
 }
 
+.center {
+  max-width: 500px;
+  margin: auto;
+}
+
 header .jumbotron {
   height: 40vh;
   margin-bottom: 0;

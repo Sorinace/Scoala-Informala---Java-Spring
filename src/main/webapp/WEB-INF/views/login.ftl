@@ -1,14 +1,9 @@
-<!doctype html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+<#include "./parts/header.ftl">
 
 <div layout:fragment="content">
-    <div class="container main-content">
-        <h3>Landon Hotel Employee Login</h3>
+    <div class="container main-content center">
+        <br/><h3>Administrator login!</h3><br/>
         <form action="/login" method="post">
-
             <div class="form-group row">
                 <label for="username" class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-6">
@@ -30,5 +25,4 @@
     </div>
 </div>
 
-</body>
-</html>
+ <#include "./parts/footer.ftl">

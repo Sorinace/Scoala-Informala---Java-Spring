@@ -69,24 +69,36 @@
           <div class="feedback-items">
 
             <#list feedback as feed>
-               <#if !feed.getVisible() && admin>
-                  <div class="feedback-item item-list media-list hide">
-               <#else>
+               <#if feed.getVisible()>
                   <div class="feedback-item item-list media-list ">
-               </#if>
-                  <div class="feedback-item media">
-                    <div class="feedback-info media-body">
-                      <div class="feedback-head">
-                        <div class="feedback-title">${feed.getTitle()}</div>
-                        <small>by ${feed.getName()}</small>
-                      </div>
-                      <div class="feedback-message">${feed.getMessage()}</div>
-                    </div>
+                        <div class="feedback-item media">
+                            <div class="feedback-info media-body">
+                                  <div class="feedback-head">
+                                        <div class="feedback-title">${feed.getTitle()}</div>
+                                          <small>by ${feed.getName()}</small>
+                                  </div>
+                                        <div class="feedback-message">${feed.getMessage()}</div>
+                             </div>
+                        </div>
+                      <#if admin>
+                          <#include "./parts/crud.ftl">
+                      </#if>
+                 </div>
+               <#elseif admin >
+                  <div class="feedback-item item-list media-list hide">
+                        <div class="feedback-item media">
+                                      <div class="feedback-info media-body">
+                                        <div class="feedback-head">
+                                          <div class="feedback-title">${feed.getTitle()}</div>
+                                          <small>by ${feed.getName()}</small>
+                                        </div>
+                                        <div class="feedback-message">${feed.getMessage()}</div>
+                                      </div>
+                        </div>
+                      <#include "./parts/crud.ftl">
                   </div>
-                  <#if admin>
-                        <#include "./parts/crud.ftl">
-                  </#if>
-                </div>
+               </#if>
+
              </#list>
 
           </div>
