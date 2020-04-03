@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import org.apache.commons.text.StringEscapeUtils;
 
 @Entity
 public class Feedback {
@@ -28,10 +29,10 @@ public class Feedback {
     }
 
     public Feedback(String name, String email, String title, String message, Boolean visible) {
-        this.name = name;
-        this.email = email;
-        this.title = title;
-        this.message = message;
+        this.name = StringEscapeUtils.escapeHtml4(name);
+        this.email = StringEscapeUtils.escapeHtml4(email);
+        this.title = StringEscapeUtils.escapeHtml4(title);
+        this.message = StringEscapeUtils.escapeHtml4(message);
         this.visible = visible;
     }
 
@@ -125,8 +126,10 @@ public class Feedback {
     public ArrayList<String> check() {
         ArrayList<String> errors = new ArrayList<>();
         if (this.name.replaceAll("\\s+","") == "" ||
-                this.name.replaceAll("\\s+","").length() < 2)
-            errors.add( "The name must have at least 2 characters!");
+                this.name.replaceAll("\\s+","").length() < 2) {
+            errors.add("The name must have at least 2 characters!");
+
+        }
 
         if (this.email.replaceAll("\\s+","") == "" || !isValid(this.email))
             errors.add( "The e-mail is not valid, pleas check!");

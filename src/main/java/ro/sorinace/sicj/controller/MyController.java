@@ -169,6 +169,56 @@ public class MyController implements ErrorController {
     }
 
 
+    @RequestMapping("/publish/{id}/{visible}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
+        Feedback feedback_form = new Feedback();
+        feedbackDBI.visibleFeedback(id, visible);
+
+        model.addAttribute("admin", isAdmin());
+        model.addAttribute("feedback_form", feedback_form);
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback publish");
+        model.addAttribute("message", "Change the visibility!");
+        return "feedback";
+    }
+
+    @RequestMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String updateRequestFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
+
+        model.addAttribute("admin", isAdmin());
+        model.addAttribute("feedback_form", feedback_form);
+        model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback update request");
+        model.addAttribute("message", "Change the message:");
+        return "feedback";
+    }
+
+    @PostMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String updateFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
+        ArrayList<String> errors = feedback_form.check();
+        if (errors.size() == 0){
+            feedbackDBI.updateFeedback(id, feedback_form.getName(), feedback_form.getEmail(), feedback_form.getTitle(), feedback_form.getMessage());
+            feedback_form = new Feedback();
+        }
+        else
+            model.addAttribute("feedback_update", feedback_form);
+
+        model.addAttribute("admin", isAdmin());
+        model.addAttribute("errors", errors);
+        model.addAttribute("feedback_form", feedback_form);
+        model.addAttribute("speakers", speakersDBI.findAll());
+        model.addAttribute("feedback", feedbackDBI.findAll());
+        model.addAttribute("title", "Roux - Feedback update");
+        model.addAttribute("message", "Message updated!");
+        return "feedback";
+    }
+
     @RequestMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteFeedback(Model model, @PathVariable Long id) {
@@ -185,48 +235,6 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
-    @RequestMapping("/publish/{id}/{visible}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
-        Feedback feedback_form = new Feedback();
-        feedbackDBI.visibleFeedback(id, visible);
-
-        model.addAttribute("admin", isAdmin());
-        model.addAttribute("feedback_form", feedback_form);
-        model.addAttribute("speakers", speakersDBI.findAll());
-        model.addAttribute("feedback", feedbackDBI.findAll());
-        model.addAttribute("title", "Roux - Feedback publish");
-        model.addAttribute("message", "Change the visibility!");
-        return "feedback";
-    }
-
-    @RequestMapping("/update/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public String updateRequestFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
-
-        model.addAttribute("admin", isAdmin());
-        model.addAttribute("feedback_form", feedback_form);
-        model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
-        model.addAttribute("speakers", speakersDBI.findAll());
-        model.addAttribute("feedback", feedbackDBI.findAll());
-        model.addAttribute("title", "Roux - Feedback update request");
-        model.addAttribute("message", "Change the message:");
-        return "feedback";
-    }
-
-    @PostMapping("/update/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public String updateFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
-        feedbackDBI.updateFeedback(id, feedback_form.getName(), feedback_form.getEmail(), feedback_form.getTitle(), feedback_form.getMessage());
-
-        model.addAttribute("admin", isAdmin());
-        model.addAttribute("feedback_form", feedback_form);
-        model.addAttribute("speakers", speakersDBI.findAll());
-        model.addAttribute("feedback", feedbackDBI.findAll());
-        model.addAttribute("title", "Roux - Feedback update");
-        model.addAttribute("message", "Message updated!");
-        return "feedback";
-    }
 
     private Boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
