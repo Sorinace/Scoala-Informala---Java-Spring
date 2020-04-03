@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Entity
 public class Feedback {
@@ -17,7 +19,13 @@ public class Feedback {
     private String message;
     private Boolean visible;
 
-    public Feedback() {}
+    public Feedback() {
+        this.name = "";
+        this.email = "";
+        this.title = "";
+        this.message = "";
+        this.visible = false;
+    }
 
     public Feedback(String name, String email, String title, String message, Boolean visible) {
         this.name = name;
@@ -112,5 +120,35 @@ public class Feedback {
         sb.append(", visible='").append(visible).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public ArrayList<String> check() {
+        ArrayList<String> errors = new ArrayList<>();
+        if (this.name.replaceAll("\\s+","") == "" ||
+                this.name.replaceAll("\\s+","").length() < 2)
+            errors.add( "The name must have at least 2 characters!");
+
+        if (this.email.replaceAll("\\s+","") == "" || !isValid(this.email))
+            errors.add( "The e-mail is not valid, pleas check!");
+
+        if (this.title.replaceAll("\\s+","") == "" ||
+                this.title.replaceAll("\\s+","").length() < 5)
+            errors.add("The title must have at least 5 characters!");
+
+        if (this.message.replaceAll("\\s+","") == "" ||
+                this.message.replaceAll("\\s+","").length() < 5)
+            errors.add("The message must have at least 5 characters!");
+
+        return errors;
+    }
+
+    private boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-z A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }

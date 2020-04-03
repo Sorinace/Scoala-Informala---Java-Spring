@@ -16,6 +16,7 @@ import ro.sorinace.sicj.model.Feedback;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/")
@@ -135,8 +136,10 @@ public class MyController implements ErrorController {
 
     @GetMapping(value = "/feedback")
     public String feedbackMapping(Model model)  {
+        Feedback feedback_form = new Feedback();
 
         model.addAttribute("admin", isAdmin());
+        model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback");
@@ -147,10 +150,15 @@ public class MyController implements ErrorController {
 
     @PostMapping("/feedback")
     public String addFeedback(Feedback feedback_form, Model model) {
-        feedback_form.setVisible(false);
-        feedbackDBI.save(feedback_form);
+        ArrayList<String> errors = feedback_form.check();
+        if (errors.size() == 0) {
+            feedback_form.setVisible(false);
+            feedbackDBI.save(feedback_form);
+            feedback_form = new Feedback();
+        }
 
         model.addAttribute("admin", isAdmin());
+        model.addAttribute("errors", errors);
         model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
@@ -164,9 +172,11 @@ public class MyController implements ErrorController {
     @RequestMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteFeedback(Model model, @PathVariable Long id) {
+        Feedback feedback_form = new Feedback();
         feedbackDBI.delete(feedbackDBI.findById(id).get());
 
         model.addAttribute("admin", isAdmin());
+        model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("message", "Message deleted!");
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
@@ -178,9 +188,11 @@ public class MyController implements ErrorController {
     @RequestMapping("/publish/{id}/{visible}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
+        Feedback feedback_form = new Feedback();
         feedbackDBI.visibleFeedback(id, visible);
 
         model.addAttribute("admin", isAdmin());
+        model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback publish");
