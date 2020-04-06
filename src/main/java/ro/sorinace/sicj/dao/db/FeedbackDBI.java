@@ -1,6 +1,5 @@
 package ro.sorinace.sicj.dao.db;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,18 +9,14 @@ import javax.transaction.Transactional;
 
 
 /**
- * CrudRepository library
- * <S extends T> S save(S entity): Saves and updates the current entity and returns that entity.
- * Optional<T> findById(ID primaryKey): Returns the entity for the given id.
- * Iterable<T> findAll(): Returns all entities.
- * long count(): Returns the count.
- * void delete(T entity): Deletes the given entity.
- * boolean existsById(ID primaryKey): Checks if the entity for the given id exists or not.
+ * @Author Sorin
+ * Connection for the "feedback" table in the DB
  */
 public interface FeedbackDBI extends CrudRepository<Feedback, Long> {
     /**
-     * @author Sorin
-     * @param id for the feedback
+     * Change the visibility of the feedback
+     * @param id is the id of the selected feedback
+     * @param visible is the visibility (true - visible, false - hided)
      */
     @Transactional
     @Modifying
@@ -29,8 +24,12 @@ public interface FeedbackDBI extends CrudRepository<Feedback, Long> {
     void visibleFeedback(Long id, Boolean visible);
 
     /**
-     * @author Sorin
-     * @param id for the feedback
+     * Update / change the selected feedback
+     * @param id is the id of the selected feedback
+     * @param name is the client name of the selected feedback
+     * @param email is the e-mail of the selected feedback
+     * @param title is the title of the selected feedback
+     * @param message is the message of the selected feedback
      */
     @Transactional
     @Modifying

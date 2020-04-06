@@ -1,13 +1,15 @@
 package ro.sorinace.sicj.model;
 
-import ro.sorinace.sicj.dao.db.ArtworkDBI;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
+/**
+ * @author Sorin
+ * The Artwork class, the picture file name and the author (ID spacker)
+ */
 @Entity
 public class Artwork {
     @Id

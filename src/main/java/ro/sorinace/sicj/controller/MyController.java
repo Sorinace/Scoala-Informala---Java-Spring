@@ -18,6 +18,10 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
+/**
+ * @author Sorin
+ * In this class we setup the path for different locations and get the permission for the WEB page
+ */
 @Controller
 @RequestMapping("/")
 public class MyController implements ErrorController {
@@ -37,21 +41,36 @@ public class MyController implements ErrorController {
      */
     @Autowired
     private SpeakersDBI speakersDBI;
+
     /**
      * read feedback data from DB
      */
     @Autowired
     private FeedbackDBI feedbackDBI;
 
+    /**
+     * read artwork data from DB
+     */
     @Autowired
     private ArtworkDBI artworkDBI;
 
+    /**
+     * Override the implicit error page location /file
+     */
     private static final String PATH = "/error";
 
     @Override
     public String getErrorPath() {
         return PATH;
     }
+
+    /**
+     *  Mapping the new location of the error page, where will be send errors
+     *  Also separate the main error (404, 500 etc.) and add an clear error message
+     * @param model data to be sent to the randed page
+     * @param request get the error generated
+     * @return the name of the mapped page (error.ftl) for error handling
+     */
 
     @RequestMapping(value = PATH)
     public String errorPage(Model model, HttpServletRequest request) {
@@ -85,6 +104,15 @@ public class MyController implements ErrorController {
         return "error";
     }
 
+    /**
+     * Mapping for the root path of the WEB
+     * @param model data to be sent to the randed page:
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: artwork send all the artworks fom DB
+     * - attribute: title is the title of the randed page
+     * @return the name of the mapped page (index.ftl)
+     */
     @RequestMapping
     public String rootMapping (Model model)  {
 
@@ -95,6 +123,14 @@ public class MyController implements ErrorController {
         return "index";
     }
 
+    /**
+     * Mapping for the /login path of the WEB when we receive a GET request
+     * @param model data to be sent to the randed page:
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: title is the title of the randed page
+     * @return the name of the mapped page (login.ftl)
+     */
     @RequestMapping("/login")
     public String getLoginPages(Model model){
 
@@ -104,6 +140,14 @@ public class MyController implements ErrorController {
         return "login";
     }
 
+    /**
+     * Mapping for the /logout-success path of the WEB when we receive a GET request
+     * @param model data to be sent to the randed page:
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: title is the title of the randed page
+     * @return the name of the mapped page (logout.ftl)
+     */
     @RequestMapping("/logout-success")
     public String getLogoutPages(Model model){
 
@@ -113,6 +157,15 @@ public class MyController implements ErrorController {
         return "logout";
     }
 
+    /**
+     * Mapping for the /speakers path of the WEB when we receive a GET request
+     * @param model data to be sent to the randed page:
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: artwork send all the artworks fom DB
+     * - attribute: title is the title of the randed page
+     * @return the name of the mapped page (speakers.ftl)
+     */
     @RequestMapping(value = "/speakers", method = RequestMethod.GET)
     public String speakerMapping(Model model)  {
 
@@ -123,6 +176,17 @@ public class MyController implements ErrorController {
         return "speakers";
     }
 
+    /**
+     * Mapping for the /speakers/id path of the WEB, the page of the speaker when we receive a GET request
+     * @param id is the ID from DB of the selected speaker
+     * @param model data to be sent to the randed page:
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: speker send the data of the speaker with the specific ID
+     * - attribute: artwork send all the artworks fom DB
+     * - attribute: title is the title of the randed page
+     * @return the name of the mapped page (speaker.ftl)
+     */
     @RequestMapping(value = "/speakers/{id}", method = RequestMethod.GET)
     public String speakerMapping(Model model, @PathVariable Long id)  {
 
@@ -134,6 +198,17 @@ public class MyController implements ErrorController {
         return "speaker";
     }
 
+    /**
+     * Mapping for the /feedback path of the WEB when we receive a GET request
+     * @param model data to be sent to the randed page:
+     * - attribute: feedback_form is the empty feedback from (reset the form)
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: spekers send all the speakers from DB
+     * - attribute: feedback send all the feedback fom DB
+     * - attribute: title is the title of the randed page
+     * - attribute: message is the message the customers will get
+     * @return the name of the mapped page (feedback.ftl)
+     */
     @GetMapping(value = "/feedback")
     public String feedbackMapping(Model model)  {
         Feedback feedback_form = new Feedback();
@@ -148,6 +223,18 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
+    /**
+     * Mapping for the /feedback path of the WEB when we receive a POST request
+     * @param model data to be sent to the randed page:
+     * @param feedback_form is the feedback received from the customer (fill the form)
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: error are the errors from the filling of the form (if are errors)
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: feedback send all the feedback fom DB
+     * - attribute: title is the title of the randed page
+     * - attribute: message is the message the customers will get
+     * @return the name of the mapped page (feedback.ftl)
+     */
     @PostMapping("/feedback")
     public String addFeedback(Feedback feedback_form, Model model) {
         ArrayList<String> errors = feedback_form.check();
@@ -168,7 +255,19 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
-
+    /**
+     * Mapping for the /publish/id/visible path of the WEB when we receive a GET request
+     * @param id is the ID from DB of the selected feedback
+     * @param visible it is true or false (true if it is visible for the costumers)
+     * @param model data to be sent to the randed page:
+     * - attribute: feedback_form is the empty feedback (reset the form)
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: feedback send all the feedback fom DB
+     * - attribute: title is the title of the randed page
+     * - attribute: message is the message the customers will get
+     * @return the name of the mapped page (feedback.ftl)
+     */
     @RequestMapping("/publish/{id}/{visible}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String publishFeedback(@PathVariable("id") Long id, @PathVariable("visible") boolean visible, Model model) {
@@ -184,12 +283,23 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
+    /**
+     * Mapping for the /update/id path of the WEB when we receive a GET request
+     * @param id is the ID from DB of the selected feedback
+     * @param model data to be sent to the randed page:
+     * - attribute: feedback_update is the feedback get for the specific ID (to populate the form)
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: spekers send all the speakers from DB
+     * - attribute: feedback send all the feedback fom DB
+     * - attribute: title is the title of the randed page
+     * - attribute: message is the message the customers will get
+     * @return the name of the mapped page (feedback.ftl)
+     */
     @RequestMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String updateRequestFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
+    public String updateRequestFeedback( Model model, @PathVariable Long id) {
 
         model.addAttribute("admin", isAdmin());
-        model.addAttribute("feedback_form", feedback_form);
         model.addAttribute("feedback_update", feedbackDBI.findById(id).get());
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
@@ -198,6 +308,19 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
+    /**
+     * Mapping for the /update/id path of the WEB when we receive a POST request
+     * @param id is the ID from DB of the selected feedback
+     * @param model data to be sent to the randed page:
+     * @param feedback_form is the updated feedback form get from user
+     * - attribute: feedback_update is the feedback get for the specific ID (to populate the form)
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: feedback send all the feedback fom DB
+     * - attribute: title is the title of the randed page
+     * - attribute: message is the message the customers will get
+     * - attribute: the name of the mapped page (feedback.ftl)
+     */
     @PostMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateFeedback(Feedback feedback_form, Model model, @PathVariable Long id) {
@@ -219,6 +342,18 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
+    /**
+     * Mapping for the /delete/id path of the WEB when we receive a GET request
+     * @param id is the ID from DB of the selected feedback for deleting
+     * @param model data to be sent to the randed page:
+     * - attribute: feedback_form is the empty feedback (reset the form)
+     * - attribute: admin is boolean, and tell us the privilege of the user
+     * - attribute: speakers send all the speakers from DB
+     * - attribute: feedback send all the feedback fom DB
+     * - attribute: title is the title of the randed page
+     * - attribute: message is the message the customers will get
+     * @return the name of the mapped page (feedback.ftl)
+     */
     @RequestMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteFeedback(Model model, @PathVariable Long id) {
@@ -227,7 +362,7 @@ public class MyController implements ErrorController {
 
         model.addAttribute("admin", isAdmin());
         model.addAttribute("feedback_form", feedback_form);
-        model.addAttribute("message", "Message deleted!");
+        model.addAttribute("message", "Feedback deleted!");
         model.addAttribute("speakers", speakersDBI.findAll());
         model.addAttribute("feedback", feedbackDBI.findAll());
         model.addAttribute("title", "Roux - Feedback deleted!");
@@ -235,7 +370,10 @@ public class MyController implements ErrorController {
         return "feedback";
     }
 
-
+    /**
+     * This method check if the client / user have the administrator role
+     * @return true if have the administrator role else return false
+     */
     private Boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

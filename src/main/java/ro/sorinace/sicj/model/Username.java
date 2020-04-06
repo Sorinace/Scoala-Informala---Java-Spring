@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * @author Sorin created on 3/31/2020
+ * Username and encripted password data
  */
 @Entity
 @Table(name = "username")

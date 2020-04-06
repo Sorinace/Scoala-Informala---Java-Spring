@@ -12,12 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ro.sorinace.sicj.service.UsernameServices;
 
 /**
  * @author Sorin  created on 3/30/2020
+ * Configuration for security (right for the reding / seeing specific path / files)
  */
 @Configuration
 @EnableWebSecurity
@@ -26,6 +25,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Autowired
     private UsernameServices usernameServices;
 
+    /**
+     * Setup the password encryption
+     * @return
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -34,6 +37,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         provider.setAuthoritiesMapper(authoritiesMapper());
         return provider;
     };
+
 
     @Bean
     public GrantedAuthoritiesMapper authoritiesMapper(){
@@ -48,6 +52,11 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         auth.authenticationProvider(authenticationProvider());
     }
 
+    /**
+     * Configure the white path (can be access for everyone)
+     * @param http path rules applied
+     * @throws Exception the errors / exception in this process
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

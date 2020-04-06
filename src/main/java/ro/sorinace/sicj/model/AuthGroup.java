@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * @author Sorin created on 3/31/2020
+ * The class of the usernames and their role
  */
 @Entity
 @Table(name = "auth_user_group")

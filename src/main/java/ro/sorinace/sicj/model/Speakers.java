@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
+/**
+ * @author Sorin
+ * The speaker data
+ */
 @Entity
 public class Speakers {
     @Id
@@ -16,7 +20,6 @@ public class Speakers {
     private String shortname;
     private String summary;
     private String description;
-    //private Artwork[] artworks = null;
 
     public Speakers() {}
 
@@ -74,14 +77,6 @@ public class Speakers {
         this.description = description;
     }
 
-//    public Artwork[] getArtworks() {
-//        return artworks;
-//    }
-//
-//    public void setArtworks(Artwork[] artworks) {
-//        this.artworks = artworks;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,7 +88,6 @@ public class Speakers {
                 Objects.equals(title, speaker.title) &&
                 Objects.equals(summary, speaker.summary) &&
                 Objects.equals(description, speaker.description);
-      //          Objects.equals(artworks, speaker.artworks);
     }
 
     @Override
@@ -110,7 +104,6 @@ public class Speakers {
         sb.append(", shortname='").append(shortname).append('\'');
         sb.append(", summary='").append(summary).append('\'');
         sb.append(", description='").append(description).append('\'');
-   //     sb.append(", artworks='").append(artworks.toString()).append('\'');
         sb.append('}');
         return sb.toString();
     }
