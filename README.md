@@ -19,7 +19,7 @@ Here I used my earned knowledge to build a dynamic MVC (model–view–controlle
 | Name | Choice |
 | ------ | ------ |
 | Operating system (OS) | Windows 10 |
-| Database  | PostgreSQL .0 |
+| Database  | PostgreSQL 9.2.22 |
 | Java | 8 Update 151  |
 | Maven | 3.5 |
 | FreeMarker | 2.3.27 |
