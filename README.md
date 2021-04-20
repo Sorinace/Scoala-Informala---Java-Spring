@@ -2,7 +2,7 @@
 Here I used my earned knowledge to build a dynamic MVC (model–view–controller) WEB server using Java and with Spring framework support, Maven, FreeMarker and PostgreSQL.
 
 ## Problem statement
-* The idea of this project was to start from a static WEBpage, and transform it into a dynamic WEB server, where data are saved into a DB *
+* The idea of this project was to start from a static WEBpage, and transform it into a dynamic WEB server, where data are saved into a DB
 
 ## Technical documentation
 ###  Implementation
